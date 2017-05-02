@@ -1,23 +1,82 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pkg1617.conoce.valencia;
 
-/**
- *
- * @author Emiliano
- */
-public class ConoceValencia {
+import java.util.Scanner;
+import Modelos.*;
+import ConexionDB.*;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        
+/*@iguisado*/
+public class ConoceValencia {
+    public static Scanner sc=new Scanner(System.in);
+    
+    public static void clear(){
+        for(int i=0;i<=100;i++){
+            System.out.println("\b");
+        }
     }
+    
+    public static int menu(){
+        
+        int eleccion=0;
+        System.out.println("MENÚ------------------------------------------");
+        System.out.println("+   Elija una opción:                        +");
+        System.out.println("+   1:Generar un nuevo test                  +");
+        System.out.println("+   2:Añadir preguntas                       +");
+        System.out.println("+   3:Eliminar preguntas                     +");
+        System.out.println("+   4:Mostrar preguntas del almacén          +");
+        System.out.println("+   5:Importar preguntas de fichero          +");
+        System.out.println("+   0:Salir del programa                     +");
+        System.out.println("----------------------------------------------");
+        eleccion=sc.nextInt();
+        return eleccion;
+    }
+
+    public static void main(String[] args) {
+        
+        int eleccion;
+        do {
+            clear();
+            eleccion=menu();
+            switch (eleccion){
+                case 1:
+                    System.out.println("Nuevo test");
+                    System.out.println("----------------------------------------------");
+                    System.out.println("Nombre del grupo");
+                    String nombre;
+                    nombre=sc.next();
+                    Grupo g= new Grupo(nombre);
+                    Partida p=new Partida(g);
+                    break;
+
+                case 2:
+                    
+                    
+                    break;
+
+                case 3:
+                    int codigo;
+                    
+                    break;
+
+                case 4:
+                    
+                    break;
+
+                case 5:
+                    
+                    break;
+
+                case 0:
+                    
+                    break;
+                default:
+                    System.out.println("Opción invalida");
+                    break;
+            }
+         }while(eleccion!=0);
+                
+        
+        
+        }
     
 }
