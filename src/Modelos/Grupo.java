@@ -20,6 +20,7 @@ public class Grupo {
         respuestas_correctas = 0;
         
     }
+    
 
     public String getNombre() {
         return nombre;
