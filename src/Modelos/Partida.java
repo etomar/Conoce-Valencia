@@ -7,6 +7,7 @@ package Modelos;
 
 import java.util.Calendar;
 import ConexionDB.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,7 +34,7 @@ public class Partida {
     public PreguntaGrupo[] cargarPreguntas() {
         ArrayList<Pregunta> al = PreguntaDAO.loadAll();
         for (int i = 0; i < 10; i++) {
-            Pregunta p = al.get(Math.random()*al.size +1);
+            Pregunta p = al.get((int)Math.random()*al.size()+1);
             preguntas[i]=(PreguntaGrupo)p;
         }
         
