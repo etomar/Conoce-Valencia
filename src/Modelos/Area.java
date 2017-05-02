@@ -7,8 +7,17 @@ package Modelos;
 
 /**
  *
- * @author Lliurex
+ * @author Vicente
  */
 public class Area {
+    
+    private int codigo;
+    private String nombre;
+    
+    Area(int codigo, String nombre){
+        
+        this.codigo=codigo;
+        this.nombre=nombre;
+    }
     
 }
