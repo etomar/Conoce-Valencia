@@ -16,13 +16,15 @@ public class Pregunta {
     private int respuesta_correcta;
     private Area area;
     private int veces;
+    private int dificultad;
     
-    public Pregunta(int codigo, String enunciado, String[] respuestas, int respuesta_correcta,Area area, int veces){
+    public Pregunta(int codigo, String enunciado, String[] respuestas, int respuesta_correcta,Area area, int dificultad, int veces){
         this.codigo=codigo;
         this.enunciado=enunciado;
         this.respuestas=respuestas;
         this.respuesta_correcta=respuesta_correcta;
         this.area=area;
+        this.dificultad=dificultad;
         this.veces=veces;
     }
     
