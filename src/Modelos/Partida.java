@@ -10,7 +10,10 @@ import ConexionDB.*;
 
 /**
  *
- * @author Lliurex
+ * @author jcfong
+ * @author fjgalindo
+ * @since 02-05-2017
+ * @version 1.0
  */
 public class Partida {
 
