@@ -14,13 +14,15 @@ public class Pregunta {
     private String enunciado;
     private String[] respuestas;
     private int respuesta_correcta;
+    private Area area;
     private int veces;
     
-    public Pregunta(int codigo, String enunciado, String[] respuestas, int respuesta_correcta, int veces){
+    public Pregunta(int codigo, String enunciado, String[] respuestas, int respuesta_correcta,Area area, int veces){
         this.codigo=codigo;
         this.enunciado=enunciado;
         this.respuestas=respuestas;
         this.respuesta_correcta=respuesta_correcta;
+        this.area=area;
         this.veces=veces;
     }
     
@@ -44,6 +46,10 @@ public class Pregunta {
         return veces;
     }
 
+    public Area getArea() {
+        return area;
+    }
+    
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
@@ -60,6 +66,10 @@ public class Pregunta {
         this.respuesta_correcta = respuesta_correcta;
     }
 
+    public void setArea(Area area) {
+        this.area = area;
+    }
+    
     public void setVeces(int veces) {
         this.veces = veces;
     }
