@@ -21,7 +21,6 @@ public class Grupo {
         
     }
     
-
     public String getNombre() {
         return nombre;
     }
