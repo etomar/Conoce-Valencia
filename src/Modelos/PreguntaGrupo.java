@@ -26,14 +26,7 @@ public class PreguntaGrupo extends Pregunta {
     }
     
     public boolean validar(){
-        boolean correcta;
-        
-        if(PreguntaGrupo.super.getRespuesta_correcta()==respuesta_contestada)
-            correcta=true;
-        else
-            correcta=false;
-        
-        return correcta;
+        return (PreguntaGrupo.super.getRespuesta_correcta()==respuesta_contestada);
     }
     
     
