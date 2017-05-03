@@ -4,6 +4,11 @@ package pkg1617.conoce.valencia;
 import java.util.Scanner;
 import Modelos.*;
 import ConexionDB.*;
+import static ConexionDB.PreguntaDAO.save;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /*@autor iguisado*/
@@ -15,6 +20,56 @@ public class ConoceValencia {
             System.out.println("\b");
         }
     }
+    
+        /**
+     * Función para cargar las preguntas a la BD desde un fichero.
+     * @param fichero Cada pregunta en una línea, cada parámetro separado por ;
+     * @param areas ArrayList con las áreas
+     * @author Lluís Navarro
+     */
+    public static void importarPreguntas(String fichero, ArrayList<Area> areas) {
+		Pregunta p = new Pregunta();
+		File fe = new File(fichero);
+		try {
+			FileReader fr = new FileReader(fe);
+			BufferedReader br = new BufferedReader(fr);
+			String cadena;
+			String[] linea, area, lineaDificultad;
+			Respuesta[] respuestas = new Respuesta[4];
+			while ((cadena = br.readLine()) != null) {
+				linea=cadena.split(";");
+                                p.setEnunciado(linea[0]);
+				for(int i=0, j=1;i<respuestas.length;i++, j++){
+                                    respuestas[i]=new Respuesta(linea[j]);
+				}
+                                p.setRespuestas(respuestas);
+                                
+				switch(linea[5]){
+				case "A":
+                                    p.setRespuesta_correcta(0);
+                                    break;
+				case "B":
+                                    p.setRespuesta_correcta(1);
+                                    break;
+				case "C":
+                                    p.setRespuesta_correcta(2);
+                                    break;
+				case "D":
+                                    p.setRespuesta_correcta(3);
+                                    break;
+				}
+				area=linea[6].split(" ");
+				p.setArea(areas.get((Integer.parseInt(area[0])-1)));
+                                lineaDificultad=linea[7].split(" ");
+                                p.setDificultad(Integer.parseInt(lineaDificultad[0]));
+                                save(p);
+				
+			}
+                        fr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
     
     public static int menu(){
         
