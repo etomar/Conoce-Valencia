@@ -37,7 +37,6 @@ public class PreguntaDAO {
      * Busca una pregunta en la BD y crea un objeto Pregunta.
      * Tambien se crean un vector de respuestas de las cuales se realiza una busqueda.
      * Consulta para sacar el area y se crea un objeto Area que hace falta para Pregunta.
-     * @throws SQLException 
      */
     public static Pregunta load(int codigo) {
         
@@ -88,9 +87,42 @@ public class PreguntaDAO {
         } 
         return p;
     }
-
+    /**
+     * 
+     * @param pregunta
+     * @return guardado
+     * Guarda un objeto Pregunta en la BD y sus respuestas
+     * 
+     */
     public static boolean save(Pregunta pregunta) {
-        return true;
+        Statement stmt=null;//guarda pregunta 
+        Statement stat=null;//guarda respuesta
+        Statement stt=null;//saca el codigo de la pregunta creada
+        Boolean guardado=false;
+        try{
+            stmt=BDConnect.connect().createStatement();
+            stmt.executeUpdate("INSERT INTO Pregunta(contenido,dificultad,"
+                + "codigo_tematica,codigo_respuesta) VALUES ('"+pregunta.getEnunciado()
+                +"',"+pregunta.getDificultad()+","+pregunta.getArea().getCodigo()+","+","+pregunta.getRespuesta_correcta()+")");
+            
+          stt=BDConnect.connect().createStatement();
+          ResultSet rs=stt.executeQuery("SELECT MAX(codigo) FROM Pregunta");
+          rs.next();
+          pregunta.setCodigo(rs.getInt(1))
+                  ;
+           Respuesta[]resp=pregunta.getRespuestas();
+           for(int i=0;i<4;i++){
+                stat=BDConnect.connect().createStatement();
+                stat.executeUpdate("INSERT INTO Respuesta(codigo,contenido,contenido_pregunta) "
+                        + "VALUES("+resp[i].getCodigo()+",'"+resp[i].getContenido()+"',"+pregunta.getCodigo()+")");
+           }
+            guardado=true;
+        }catch(SQLException e){
+            BDConnect.showMYSQLerrors(e);
+            guardado=false;
+        }
+        
+        return guardado;
     }
 
     public static ArrayList<Pregunta> loadAll() {
