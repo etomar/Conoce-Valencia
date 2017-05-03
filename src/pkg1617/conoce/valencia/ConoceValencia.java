@@ -5,12 +5,12 @@ import java.util.Scanner;
 import Modelos.*;
 import ConexionDB.*;
 
-/*@iguisado*/
+/*@autor iguisado*/
 public class ConoceValencia {
     public static Scanner sc=new Scanner(System.in);
     
     public static void clear(){
-        for(int i=0;i<=100;i++){
+        for(int i=0;i<=300;i++){
             System.out.println("\b");
         }
     }
@@ -18,15 +18,16 @@ public class ConoceValencia {
     public static int menu(){
         
         int eleccion=0;
-        System.out.println("MENÚ------------------------------------------");
-        System.out.println("+   Elija una opción:                        +");
-        System.out.println("+   1:Generar un nuevo test                  +");
-        System.out.println("+   2:Añadir preguntas                       +");
-        System.out.println("+   3:Eliminar preguntas                     +");
-        System.out.println("+   4:Mostrar preguntas del almacén          +");
-        System.out.println("+   5:Importar preguntas de fichero          +");
-        System.out.println("+   0:Salir del programa                     +");
-        System.out.println("----------------------------------------------");
+        System.out.println("               CONOCE VALÈNCIA                ");
+        System.out.println("                    MENÚ                      ");
+        System.out.println("   Elija una opción:                          ");
+        System.out.println("   1: Generar un nuevo test                   ");
+        System.out.println("   2: Añadir preguntas                        ");
+        System.out.println("   3: Eliminar preguntas                      ");
+        System.out.println("   4: Mostrar preguntas del almacén           ");
+        System.out.println("   5: Importar preguntas de fichero           ");
+        System.out.println("   0: Salir del programa                      ");
+        System.out.println("______________________________________________");
         eleccion=sc.nextInt();
         return eleccion;
     }
@@ -39,9 +40,9 @@ public class ConoceValencia {
             eleccion=menu();
             switch (eleccion){
                 case 1:
-                    System.out.println("Nuevo test");
-                    System.out.println("----------------------------------------------");
-                    System.out.println("Nombre del grupo");
+                    System.out.println("¡Empezamos a jugar!");
+                    System.out.println("______________________________________________");
+                    System.out.println("Indica el nombre de tu grupo: ");
                     String nombre;
                     nombre=sc.next();
                     Grupo g= new Grupo(nombre);
@@ -70,7 +71,7 @@ public class ConoceValencia {
                     
                     break;
                 default:
-                    System.out.println("Opción invalida");
+                    System.out.println("¡Ops! No has introducido una opción del menú.. vuelve a intentarlo :) ");
                     break;
             }
          }while(eleccion!=0);
