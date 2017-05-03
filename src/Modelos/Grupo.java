@@ -5,6 +5,8 @@
  */
 package Modelos;
 
+import ConexionDB.GrupoDAO;
+
 /**
  *
  * @author Lliurex
@@ -12,13 +14,15 @@ package Modelos;
 public class Grupo {
     
     private String nombre;
-    private int respuestas_correctas;
+    
     
     public Grupo(String nombre){
         
         this.nombre = nombre;
-        respuestas_correctas = 0;
         
+        
+        if(!GrupoDAO.exist(nombre))
+            GrupoDAO.save(this);
     }
     
     public String getNombre() {
@@ -27,19 +31,5 @@ public class Grupo {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public int getRespuestas_correctas() {
-        return respuestas_correctas;
-    }
-
-    public void setRespuestas_correctas(int respuestas_correctas) {
-        this.respuestas_correctas = respuestas_correctas;
-    }
-    
-        public void addRespuestaCorrecta(){
-        
-        respuestas_correctas ++;
-    }
-        
+    }   
 }

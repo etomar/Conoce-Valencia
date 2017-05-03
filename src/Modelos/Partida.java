@@ -17,18 +17,17 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Partida {
-
+    private int codigo;
+    private int respuestas_correctas;
     private Calendar fecha;
     private PreguntaGrupo[] preguntas;
     private Grupo g;
-
-    public Partida() {
-    }
 
     public Partida(Grupo g) {
         preguntas = new PreguntaGrupo[10];
         fecha = Calendar.getInstance();
         this.g = g;
+        this.respuestas_correctas = 0;
     }
 
     public PreguntaGrupo[] cargarPreguntas() {
@@ -40,7 +39,23 @@ public class Partida {
         
         return preguntas;
     }
-
+    
+    /*
+        Registrar los resultados de la partida
+    */
+    public void finalizar(){
+        PartidaDAO.save(this);
+        
+        for(int i=0; i<preguntas.length;i++){
+            if(preguntas[i].validar())
+                this.respuestas_correctas++;
+            
+            PartidaDAO.registrarRespuestaPregunta(this.codigo, preguntas[i].getRespuesta_contestada());
+        }
+        
+        PartidaDAO.save(this);//Actualizar respuestas correctas
+    }
+    
     public Calendar getFecha() {
         return fecha;
     }
@@ -53,6 +68,10 @@ public class Partida {
         return preguntas;
     }
 
+    public int getRespuestas_correctas() {
+        return respuestas_correctas;
+    }
+    
     public void setPreguntas(PreguntaGrupo[] preguntas) {
         this.preguntas = preguntas;
     }
@@ -65,4 +84,8 @@ public class Partida {
         this.g = g;
     }
 
+    public void setRespuestas_correctas(int respuestas_correctas) {
+        this.respuestas_correctas = respuestas_correctas;
+    }
+    
 }
