@@ -83,4 +83,7 @@ public class Pregunta {
     public void setDificultad(int dificultad) {
         this.dificultad = dificultad;
     }
+    public int getDificultad(){
+        return dificultad;
+    }
 }
