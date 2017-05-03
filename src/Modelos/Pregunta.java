@@ -28,6 +28,10 @@ public class Pregunta {
         this.veces=veces;
     }
     
+    public Pregunta(){
+        
+    }
+    
     public int getCodigo(){
         return codigo;
     }
@@ -74,5 +78,9 @@ public class Pregunta {
     
     public void setVeces(int veces) {
         this.veces = veces;
+    }
+    
+    public void setDificultad(int dificultad) {
+        this.dificultad = dificultad;
     }
 }
