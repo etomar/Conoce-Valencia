@@ -1,4 +1,6 @@
-
+/**
+ * Proyecto desarrollo aplicación Conoce Valencia
+ */
 package pkg1617.conoce.valencia;
 
 import java.util.Scanner;
