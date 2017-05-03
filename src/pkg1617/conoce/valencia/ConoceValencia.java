@@ -1,11 +1,10 @@
-/**
- * Proyecto desarrollo aplicación Conoce Valencia
- */
+
 package pkg1617.conoce.valencia;
 
 import java.util.Scanner;
 import Modelos.*;
 import ConexionDB.*;
+import java.util.ArrayList;
 
 /*@autor iguisado*/
 public class ConoceValencia {
@@ -40,7 +39,9 @@ public class ConoceValencia {
         do {
             clear();
             eleccion=menu();
+            int dificultad=sc.nextInt();
             switch (eleccion){
+                
                 case 1:
                     System.out.println("¡Empezamos a jugar!");
                     System.out.println("______________________________________________");
@@ -48,21 +49,70 @@ public class ConoceValencia {
                     String nombre;
                     nombre=sc.next();
                     Grupo g= new Grupo(nombre);
+                    System.out.println("Elige la dificultad del juego");
+                    
+                    
                     Partida p=new Partida(g);
                     break;
 
                 case 2:
+                    System.out.println("Añadir pregunta");
+                    System.out.println("______________________________________________");
+                    int codigo=0;
+                    String enunciado="";
+                    Respuesta[] respuestas= new Respuesta[4];
+                    int respuesta_correcta=0;
+                    Area area;
+                    int veces=0;
+                    Pregunta pre= new Pregunta(codigo,enunciado,respuestas, respuesta_correcta,area, dificultad, veces);
+                    
+                    System.out.println("Añadir enunciado pregunta");
+                    enunciado=sc.next();
+                    System.out.println("Respuestas porsibles");
+                    char[] letras = new char[]{'A', 'B', 'C', 'D'};
+                    
+                    for(int i=0;i<=respuestas.length;i++){
+                        System.out.println("Añade la respuesta "+letras[i]);
+                        respuestas[i] = new Respuesta(0, sc.next());
+                    }
+                    System.out.println("¿Cúal es la respuesta correcta?");
+                    respuesta_correcta=sc.nextInt();
+                    /********************FALTA AÑADIR LA AREA********************************************/
+
+                    System.out.println("Area de la pregunta");
+                    /********************FALTA AÑADIR LA AREA********************************************/
+                    System.out.println("¿Cúal es la dificultad?");
+                    dificultad=sc.nextInt();
                     
                     
                     break;
 
                 case 3:
-                    int codigo;
-                    
+                    int codigoPreguntaEliminada=0;
+                    System.out.println("¿Cúal es el código de la pregunta a eliminar?");
+                    codigoPreguntaEliminada= sc.nextInt();
+                    PreguntaDAO.delete(codigoPreguntaEliminada);
                     break;
 
                 case 4:
-                    
+                    ArrayList<Pregunta> all=PreguntaDAO.loadAll();
+                    System.out.println();
+                    String pasaPagina;
+                    do{
+                        
+                        for(int i=0;i<all.size();i++){
+                            
+                            System.out.println("codigo:"+all.get(i).getCodigo());
+                            System.out.println("Enunciado:"+all.get(i).getEnunciado());
+                            System.out.println("Respuestas:"+all.get(i).getRespuestas());
+                            System.out.println("Respuesta correcta:"+all.get(i).getRespuesta_correcta());
+                            System.out.println("Area :"+all.get(i).getArea());
+                            System.out.println("Dificultad :"+all.get(i).getDificultad());
+                            System.out.println("Veces :"+all.get(i).getVeces());
+                        }
+                        System.out.println("Presiona espacio y enter para mostrar las 20 siguientes");
+                    pasaPagina=sc.next();
+                    }while(pasaPagina.equals(" "));
                     break;
 
                 case 5:
