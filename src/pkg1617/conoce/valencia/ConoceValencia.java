@@ -62,7 +62,7 @@ public class ConoceValencia {
                     String enunciado="";
                     Respuesta[] respuestas= new Respuesta[4];
                     int respuesta_correcta=0;
-                    Area area;
+                    Area area = null;
                     int veces=0;
                     Pregunta pre= new Pregunta(codigo,enunciado,respuestas, respuesta_correcta,area, dificultad, veces);
                     
