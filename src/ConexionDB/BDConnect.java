@@ -30,7 +30,7 @@ public class BDConnect {
         
         return null;
     }
-    
+
     public static void showMYSQLerrors(SQLException ex){        
         System.out.println("SQLException: " + ex.getMessage());
         System.out.println("SQLState: " + ex.getSQLState());
