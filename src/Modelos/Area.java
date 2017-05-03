@@ -20,7 +20,7 @@ public class Area {
      * @param codigo, codigo del area. De tipo entero
      * @param nombre, nombre del area. De tipo String.
      */
-    Area(int codigo, String nombre){
+    public Area(int codigo, String nombre){
         
         this.codigo=codigo;
         this.nombre=nombre;
