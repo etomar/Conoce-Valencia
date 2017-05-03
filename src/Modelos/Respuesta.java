@@ -17,6 +17,9 @@ public class Respuesta {
         this.codigo=codigo;
         this.contenido=contenido;
     }
+    public Respuesta(String contenido){
+        this.contenido=contenido;
+    }
 
     public int getCodigo() {
         return codigo;
