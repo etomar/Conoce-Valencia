@@ -118,12 +118,27 @@ public class ConoceValencia {
                         System.out.println("Seleccionar respuesta");
                         char a =sc.next().toUpperCase().charAt(0);
                         //comprobar que el caracter esté entre A y D
+                        
                         switch(a){
                             case 'A':
-                                
+                                pg.setRespuesta_contestada(pg.getRespuestas()[0].getCodigo());
+                                break;
+                            case 'B':
+                                pg.setRespuesta_contestada(pg.getRespuestas()[1].getCodigo());
+                                break;
+                            case 'C':
+                                pg.setRespuesta_contestada(pg.getRespuestas()[2].getCodigo());
+                                break;
+                            case 'D':
+                                pg.setRespuesta_contestada(pg.getRespuestas()[3].getCodigo());
+                                break;
                         }
-                        
+                        if(pg.validar()){
+                            p.incrementarRespuestasCorrectas();
+                        }   
                     }
+                    System.out.println("Respuestas correctas: "+p.getRespuestas_correctas());
+                    p.finalizar();
                     break;
 
                 case 2:

@@ -35,6 +35,7 @@ public class Partida {
         for (int i = 0; i < 10; i++) {
             Pregunta p = al.get((int)Math.random()*al.size()+1);
             preguntas[i]=(PreguntaGrupo)p;
+            PreguntaDAO.sumarVeces(p);
         }
         
         return preguntas;
@@ -85,6 +86,10 @@ public class Partida {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+    
+    public void incrementarRespuestasCorrectas(){
+        this.respuestas_correctas++;
     }
     
 }

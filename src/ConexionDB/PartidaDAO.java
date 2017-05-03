@@ -26,14 +26,14 @@ public class PartidaDAO {
     public static void save(Partida partida){
        
         try {
-            int respuestas_correctas=0;
+            /*int respuestas_correctas=0;
             
             for(int i=0; i<partida.getPreguntas().length;i++)
                     if(partida.getPreguntas()[i].validar())
-                        respuestas_correctas++;
+                        respuestas_correctas++;*/
             
             String query = "INSERT INTO Sesion VALUES("
-		+ "\"" + respuestas_correctas + "\", "
+		+ "\"" + partida.getRespuestas_correctas() + "\", "
 		+ "\"" + partida.getFecha() + "\", "
 		+ "\"" + partida.getG() +"\")";
             
