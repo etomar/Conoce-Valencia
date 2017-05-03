@@ -87,6 +87,7 @@ public class PreguntaDAO {
         } 
         return p;
     }
+    
     /**
      * 
      * @param pregunta
@@ -124,9 +125,60 @@ public class PreguntaDAO {
         
         return guardado;
     }
-
+/**
+ * 
+ * @return preguntas
+ *Carga todas las preguntas en un AL 
+ */
     public static ArrayList<Pregunta> loadAll() {
-        return null;
+        
+        ArrayList<Pregunta>preguntas=new ArrayList<Pregunta>();
+         Statement stmt= null;//seleccionar la pregunta
+         Statement stat= null;//seleccionar las respuesta de la pregunta
+         Statement stm=null;//seleccionar el area
+        try {
+            int contador=0;//aumenta la posicion del vector
+            Respuesta[]respuesta=new Respuesta[4];
+            
+            stmt = BDConnect.connect().createStatement();
+            stat=BDConnect.connect().createStatement();
+            stm=BDConnect.connect().createStatement();
+            
+            ResultSet res=stat.executeQuery("SELECT (*) FROM Respuesta" );
+            
+            while(res.next()){
+                int cod=res.getInt("codigo");
+                String contenido=res.getString("contenido");
+                respuesta[contador]=new Respuesta(cod,contenido);
+                contador++;
+                ResultSet rs=   stmt.executeQuery("SELECT (*) FROM Pregunta WHERE codigo="+cod);
+            rs.next();
+            
+            
+            int codigo = rs.getInt("codigo");
+            String cont = rs.getString("contenido");
+            int veces = rs.getInt("veces");
+            int dificultad = rs.getInt("difcultad");
+            int cod_tematica=rs.getInt("codigo_tematica");
+           ResultSet result=stm.executeQuery("SELECT nombre FROM Tematica WHERE codigo_tematica = "+cod_tematica);
+           result.next();
+           String nombre = result.getString("nombre");
+           
+            Area area =new Area(cod_tematica,nombre);
+            
+            int cod_respuesta = rs.getInt("codigo_respuesta");
+            
+           preguntas.add(new Pregunta(codigo,cont,respuesta,cod_respuesta,area,dificultad,veces));
+            }            
+            stmt.close();
+            stat.close();
+            stm.close();
+            
+        } catch (SQLException e) {
+            BDConnect.showMYSQLerrors(e);
+        } 
+        return preguntas;
+    }
     }
 
-}
+
