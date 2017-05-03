@@ -14,11 +14,12 @@ import java.sql.Statement;
 
 /**
  *
- * @author Ruben y Bujeda
+ * @author Ruben y J.Bujeda
  */
 public class PartidaDAO {
     
     /**
+     * @author Ruben y J.Bujeda
      * Metodo save que guarda la partida en la base de datos
      * @param partida
      * @param codigo
@@ -49,6 +50,31 @@ public class PartidaDAO {
 	        }
     }
     
-    public static void registrarRespuestaPregunta(int codigo_partida, int codigo_respuesta){
+    /**
+     * @author Ruben y J.Bujeda
+     * Metodo para guardar las respuestas seleccionadas en la partida
+     * @param codigo_sesion
+     * @param codigo_respuesta 
+     */
+    public static void registrarRespuestaPregunta(int codigo_sesion, int codigo_respuesta){
+        
+        try {
+            String query = "INSERT INTO Responde VALUES("
+		+ "\"" + codigo_sesion + "\", "
+		+ "\"" + codigo_respuesta +"\")";
+            
+		Statement stat;
+                
+                stat = BDConnect.connect().createStatement();
+		stat.executeUpdate(query);
+			 
+		System.out.println("Respuesta Guardada");
+			 
+	        } catch (SQLException ex) {
+	        	
+	            System.out.println("Error al guardar respuesta");
+	            
+	        }
+        
     }
 }
