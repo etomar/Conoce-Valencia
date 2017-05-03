@@ -5,15 +5,48 @@
  */
 package ConexionDB;
 
+
+//import static ConexionDB.BDConnect.*;
 import Modelos.Partida;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
- * @author sx
+ * @author Ruben y Bujeda
  */
 public class PartidaDAO {
-    public static boolean save(Partida partida){
-        return true;
+    
+    /**
+     * Metodo save que guarda la partida en la base de datos
+     * @param partida
+     * @param codigo
+     * @param aciertos
+     * @param fecha
+     * @param grupo 
+     */
+    public static void save(Partida partida, int codigo, int aciertos, Date fecha, String grupo){
+       
+        try {
+            String query = "INSERT INTO Sesion VALUES("
+		+ "\"" + codigo + "\", "
+		+ "\"" + aciertos + "\", "
+		+ "\"" + fecha + "\", "
+		+ "\"" + grupo +"\")";
+            
+		Statement stat;
+                
+                stat = BDConnect.connect().createStatement();
+		stat.executeUpdate(query);
+			 
+		System.out.println("Partida Guardada");
+			 
+	        } catch (SQLException ex) {
+	        	
+	            System.out.println("Error al guardar partida");
+	            
+	        }
     }
     
     public static void registrarRespuestaPregunta(int codigo_partida, int codigo_respuesta){
