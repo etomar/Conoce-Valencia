@@ -12,13 +12,13 @@ package Modelos;
 public class Pregunta {
     private int codigo;
     private String enunciado;
-    private String[] respuestas;
+    private Respuesta[] respuestas;
     private int respuesta_correcta;
     private Area area;
     private int veces;
     private int dificultad;
     
-    public Pregunta(int codigo, String enunciado, String[] respuestas, int respuesta_correcta,Area area, int dificultad, int veces){
+    public Pregunta(int codigo, String enunciado, Respuesta[] respuestas, int respuesta_correcta,Area area, int dificultad, int veces){
         this.codigo=codigo;
         this.enunciado=enunciado;
         this.respuestas=respuestas;
@@ -36,7 +36,7 @@ public class Pregunta {
         return enunciado;
     }
 
-    public String[] getRespuestas() {
+    public Respuesta[] getRespuestas() {
         return respuestas;
     }
 
@@ -60,7 +60,7 @@ public class Pregunta {
         this.enunciado = enunciado;
     }
 
-    public void setRespuestas(String[] respuestas) {
+    public void setRespuestas(Respuesta[] respuestas) {
         this.respuestas = respuestas;
     }
 
