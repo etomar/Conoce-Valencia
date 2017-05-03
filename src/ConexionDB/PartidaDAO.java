@@ -43,7 +43,7 @@ public class PartidaDAO {
 		stat.executeUpdate(query);
 		
                 Statement stt=BDConnect.connect().createStatement();
-                ResultSet rs=stt.executeQuery("SELECT MAX(codigo) FROM Pregunta");
+                ResultSet rs=stt.executeQuery("SELECT MAX(codigo) FROM Partida");
                 rs.next();
                 partida.setCodigo(rs.getInt(1));
                 
