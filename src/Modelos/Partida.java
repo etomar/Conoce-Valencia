@@ -7,6 +7,7 @@ package Modelos;
 
 import java.util.Calendar;
 import ConexionDB.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -30,12 +31,12 @@ public class Partida {
         this.respuestas_correctas = 0;
     }
 
-    public PreguntaGrupo[] cargarPreguntas() {
+    public PreguntaGrupo[] cargarPreguntas() throws SQLException {
         ArrayList<Pregunta> al = PreguntaDAO.loadAll();
         for (int i = 0; i < 10; i++) {
             Pregunta p = al.get((int)Math.random()*al.size()+1);
             preguntas[i]=(PreguntaGrupo)p;
-            PreguntaDAO.sumarVeces(p);
+            PreguntaDAO.incrementarVeces(p);
         }
         
         return preguntas;

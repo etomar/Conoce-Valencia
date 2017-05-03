@@ -6,6 +6,7 @@
 package Modelos;
 
 import ConexionDB.PreguntaDAO;
+import java.sql.SQLException;
 
 /**
  *
@@ -14,15 +15,15 @@ import ConexionDB.PreguntaDAO;
 public class PreguntaGrupo extends Pregunta {
     private int respuesta_contestada;
 
-    public PreguntaGrupo(int codigo, String enunciado, Respuesta[] respuestas, int respuesta_correcta, Area area, int dificultad, int veces, int respuesta_contestada) {
+    public PreguntaGrupo(int codigo, String enunciado, Respuesta[] respuestas, int respuesta_correcta, Area area, int dificultad, int veces, int respuesta_contestada) throws SQLException {
         super(codigo, enunciado, respuestas, respuesta_correcta, area, dificultad, veces);
         this.respuesta_contestada = respuesta_contestada;
         incrementarVeces();
     }
     
-    public void incrementarVeces(){
-        this.setVeces(this.getVeces()+1);
-        PreguntaDAO.save(this);
+    public void incrementarVeces() throws SQLException{
+        //this.setVeces(this.getVeces()+1);
+        PreguntaDAO.incrementarVeces(this);
     }
     
     public void setRespuesta_contestada(int respuesta_contestada) {
