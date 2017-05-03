@@ -8,7 +8,6 @@ package ConexionDB;
 
 //import static ConexionDB.BDConnect.*;
 import Modelos.Partida;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -22,19 +21,14 @@ public class PartidaDAO {
      * @author Ruben y J.Bujeda
      * Metodo save que guarda la partida en la base de datos
      * @param partida
-     * @param codigo
-     * @param aciertos
-     * @param fecha
-     * @param grupo 
      */
-    public static void save(Partida partida, int codigo, int aciertos, Date fecha, String grupo){
+    public static void save(Partida partida){
        
         try {
             String query = "INSERT INTO Sesion VALUES("
-		+ "\"" + codigo + "\", "
-		+ "\"" + aciertos + "\", "
-		+ "\"" + fecha + "\", "
-		+ "\"" + grupo +"\")";
+		+ "\"" + partida.getRespuestas_correctas() + "\", "
+		+ "\"" + partida.getFecha() + "\", "
+		+ "\"" + partida.getG() +"\")";
             
 		Statement stat;
                 
