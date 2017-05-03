@@ -35,6 +35,7 @@ public class Partida {
         for (int i = 0; i < 10; i++) {
             Pregunta p = al.get((int)Math.random()*al.size()+1);
             preguntas[i]=(PreguntaGrupo)p;
+            PreguntaDAO.sumarVeces(p);
         }
         
         return preguntas;
@@ -45,15 +46,6 @@ public class Partida {
     */
     public void finalizar(){
         PartidaDAO.save(this);
-        
-        for(int i=0; i<preguntas.length;i++){
-            if(preguntas[i].validar())
-                this.respuestas_correctas++;
-            
-            PartidaDAO.registrarRespuestaPregunta(this.codigo, preguntas[i].getRespuesta_contestada());
-        }
-        
-        PartidaDAO.save(this);//Actualizar respuestas correctas
     }
     
     public Calendar getFecha() {
@@ -86,6 +78,18 @@ public class Partida {
 
     public void setRespuestas_correctas(int respuestas_correctas) {
         this.respuestas_correctas = respuestas_correctas;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+    
+    public void incrementarRespuestasCorrectas(){
+        this.respuestas_correctas++;
     }
     
 }
