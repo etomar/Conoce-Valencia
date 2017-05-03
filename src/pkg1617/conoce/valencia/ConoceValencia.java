@@ -44,26 +44,27 @@ public class ConoceValencia {
                     respuestas[i] = new Respuesta(linea[j]);
                 }
                 p.setRespuestas(respuestas);
-
+                int pos=0;
                 switch (linea[5]) {
                     case "A":
-                        p.setRespuesta_correcta(0);
+                        pos=0;
                         break;
                     case "B":
-                        p.setRespuesta_correcta(1);
+                        pos=1;
                         break;
                     case "C":
-                        p.setRespuesta_correcta(2);
+                        pos=2;
                         break;
                     case "D":
-                        p.setRespuesta_correcta(3);
+                        pos=3;
                         break;
                 }
                 area = linea[6].split(" ");
                 p.setArea(areas.get((Integer.parseInt(area[0]) - 1)));
                 lineaDificultad = linea[7].split(" ");
                 p.setDificultad(Integer.parseInt(lineaDificultad[0]));
-                PreguntaDAO.save(p);
+                PreguntaDAO.save(p, pos);
+                
 
             }
             fr.close();
@@ -95,7 +96,6 @@ public class ConoceValencia {
         do {
             clear();
             eleccion = menu();
-            int dificultad = sc.nextInt();
             ArrayList<Area> areas = AreaDAO.loadAll();
             switch (eleccion) {
 
@@ -107,8 +107,23 @@ public class ConoceValencia {
                     nombre = sc.nextLine();
                     Grupo g = new Grupo(nombre);
                     System.out.println("Elige la dificultad del juego");
-
+                    int dificultad = sc.nextInt();
                     Partida p = new Partida(g);
+                    for(int i=0;i<10;i++){
+                        PreguntaGrupo pg = p.cargarPreguntas()[i];
+                        System.out.println(pg.getEnunciado());
+                        for(int j=0;j<pg.getRespuestas().length;j++){
+                            System.out.println(pg.getRespuestas()[j].getContenido());
+                        }
+                        System.out.println("Seleccionar respuesta");
+                        char a =sc.next().toUpperCase().charAt(0);
+                        //comprobar que el caracter esté entre A y D
+                        switch(a){
+                            case 'A':
+                                
+                        }
+                        
+                    }
                     break;
 
                 case 2:

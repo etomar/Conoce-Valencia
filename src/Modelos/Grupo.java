@@ -6,6 +6,9 @@
 package Modelos;
 
 import ConexionDB.GrupoDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,8 +24,12 @@ public class Grupo {
         this.nombre = nombre;
         
         
-        if(!GrupoDAO.exist(nombre))
-            GrupoDAO.save(this);
+        try {
+            if(!GrupoDAO.exist(nombre))
+                GrupoDAO.save(this);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public String getNombre() {

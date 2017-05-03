@@ -16,7 +16,8 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class PreguntaDAO {
-/**
+static final int NUM_RESPUESTAS=4;
+    /**
  * Borra una pregunta de la BD
  * @param codigo 
  */
@@ -42,7 +43,7 @@ public class PreguntaDAO {
         
          Pregunta p=null;
          int contador=0;//aumenta la posicion del vector
-         Respuesta[]respuesta=new Respuesta[4];
+         Respuesta[]respuesta=new Respuesta[NUM_RESPUESTAS];
          Statement stmt= null;//seleccionar la pregunta
          Statement stat= null;//seleccionar las respuesta de la pregunta
          Statement stm=null;//seleccionar el area
@@ -95,7 +96,7 @@ public class PreguntaDAO {
      * Guarda un objeto Pregunta en la BD y sus respuestas
      * 
      */
-    public static boolean save(Pregunta pregunta) {
+   /* public static boolean save(Pregunta pregunta) {
         Statement stmt=null;//guarda pregunta 
         Statement stat=null;//guarda respuesta
         Statement stt=null;//saca el codigo de la pregunta creada
@@ -112,11 +113,49 @@ public class PreguntaDAO {
           pregunta.setCodigo(rs.getInt(1))
                   ;
            Respuesta[]resp=pregunta.getRespuestas();
-           for(int i=0;i<4;i++){
+           for(int i=0;i<NUM_RESPUESTAS;i++){
                 stat=BDConnect.connect().createStatement();
                 stat.executeUpdate("INSERT INTO Respuesta(codigo,contenido,contenido_pregunta) "
                         + "VALUES("+resp[i].getCodigo()+",'"+resp[i].getContenido()+"',"+pregunta.getCodigo()+")");
            }
+            guardado=true;
+        }catch(SQLException e){
+            BDConnect.showMYSQLerrors(e);
+            guardado=false;
+        }
+        
+        return guardado;
+    }*/
+    
+    public static boolean save(Pregunta pregunta, int pos) {
+        Statement stmt=null;//guarda pregunta 
+        Statement stat=null;//guarda respuesta
+        Statement stt=null;//saca el codigo de la pregunta creada
+        Boolean guardado=false;
+        try{
+            stmt=BDConnect.connect().createStatement();
+            stmt.executeUpdate("INSERT INTO Pregunta(contenido,dificultad,"
+                + "codigo_tematica) VALUES ('"+pregunta.getEnunciado()
+                +"',"+pregunta.getDificultad()+","+pregunta.getArea().getCodigo()+")");
+            
+          stt=BDConnect.connect().createStatement();
+          ResultSet rs=stt.executeQuery("SELECT MAX(codigo) FROM Pregunta");
+          rs.next();
+          pregunta.setCodigo(rs.getInt(1));
+          Respuesta[]resp=pregunta.getRespuestas();
+           for(int i=0;i<NUM_RESPUESTAS;i++){
+                stat=BDConnect.connect().createStatement();
+                stat.executeUpdate("INSERT INTO Respuesta(contenido,contenido_pregunta) "
+                        + "VALUES('"+resp[i].getContenido()+"',"+pregunta.getCodigo()+")");
+            Statement stt1=BDConnect.connect().createStatement();
+          ResultSet rs1=stt1.executeQuery("SELECT MAX(codigo) FROM Respuesta");
+          rs1.next();
+          resp[i].setCodigo(rs1.getInt(1));
+           }
+           Statement stt2=BDConnect.connect().createStatement();
+           stt2.executeUpdate("UPDATE Pregunta SET codigo_respuesta="+resp[pos].getCodigo()+" WHERE codigo="+pregunta.getCodigo());
+            
+            
             guardado=true;
         }catch(SQLException e){
             BDConnect.showMYSQLerrors(e);
@@ -138,7 +177,7 @@ public class PreguntaDAO {
          Statement stm=null;//seleccionar el area
         try {
             int contador=0;//aumenta la posicion del vector
-            Respuesta[]respuesta=new Respuesta[4];
+            Respuesta[]respuesta=new Respuesta[NUM_RESPUESTAS];
             
             stmt = BDConnect.connect().createStatement();
             stat=BDConnect.connect().createStatement();
