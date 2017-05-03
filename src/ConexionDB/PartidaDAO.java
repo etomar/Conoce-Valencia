@@ -8,6 +8,7 @@ package ConexionDB;
 
 //import static ConexionDB.BDConnect.*;
 import Modelos.Partida;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,8 +26,14 @@ public class PartidaDAO {
     public static void save(Partida partida){
        
         try {
+            int respuestas_correctas=0;
+            
+            for(int i=0; i<partida.getPreguntas().length;i++)
+                    if(partida.getPreguntas()[i].validar())
+                        respuestas_correctas++;
+            
             String query = "INSERT INTO Sesion VALUES("
-		+ "\"" + partida.getRespuestas_correctas() + "\", "
+		+ "\"" + respuestas_correctas + "\", "
 		+ "\"" + partida.getFecha() + "\", "
 		+ "\"" + partida.getG() +"\")";
             
@@ -34,7 +41,16 @@ public class PartidaDAO {
                 
                 stat = BDConnect.connect().createStatement();
 		stat.executeUpdate(query);
-			 
+		
+                Statement stt=BDConnect.connect().createStatement();
+                ResultSet rs=stt.executeQuery("SELECT MAX(codigo) FROM Pregunta");
+                rs.next();
+                partida.setCodigo(rs.getInt(1));
+                
+                for(int i=0; i<partida.getPreguntas().length;i++)
+                    PartidaDAO.registrarRespuestaPregunta(partida.getCodigo(), partida.getPreguntas()[i].getRespuesta_contestada());
+        
+                
 		System.out.println("Partida Guardada");
 			 
 	        } catch (SQLException ex) {
