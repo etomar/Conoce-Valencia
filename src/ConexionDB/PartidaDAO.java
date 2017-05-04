@@ -5,8 +5,6 @@
  */
 package ConexionDB;
 
-
-//import static ConexionDB.BDConnect.*;
 import Modelos.Partida;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +12,8 @@ import java.sql.Statement;
 
 
 /**
- *
+ * Esta clase contiene un metodo utlizado para guardar las puntuaciones de las partidas 
+ * y otro que se encarga de registrar las repuestas
  * @author Ruben y J.Bujeda
  */
 public class PartidaDAO {

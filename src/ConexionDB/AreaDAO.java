@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 /**
- * CLase AreaDAO
+ * Clase AreaDAO
  * @author Vicente Cabedo
  * @author Javier Galindo
  * @since 03/05/2017

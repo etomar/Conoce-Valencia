@@ -21,7 +21,6 @@ public class PreguntaDAO {
 
     /**
      * Borra una pregunta de la BD
-     *
      * @param codigo
      */
     public static void delete(int codigo) {
@@ -36,7 +35,6 @@ public class PreguntaDAO {
     }
 
     /**
-     *
      * @param codigo
      * @return Pregunta p Busca una pregunta en la BD y crea un objeto Pregunta.
      * Tambien se crean un vector de respuestas de las cuales se realiza una
@@ -93,41 +91,11 @@ public class PreguntaDAO {
     }
 
     /**
-     *
+     * Guarda las preguntas y sus correspondientes repuestas.
      * @param pregunta
      * @return guardado Guarda un objeto Pregunta en la BD y sus respuestas
      *
      */
-    /* public static boolean save(Pregunta pregunta) {
-        Statement stmt=null;//guarda pregunta 
-        Statement stat=null;//guarda respuesta
-        Statement stt=null;//saca el codigo de la pregunta creada
-        Boolean guardado=false;
-        try{
-            stmt=BDConnect.connect().createStatement();
-            stmt.executeUpdate("INSERT INTO Pregunta(contenido,dificultad,"
-                + "codigo_tematica,codigo_respuesta) VALUES ('"+pregunta.getEnunciado()
-                +"',"+pregunta.getDificultad()+","+pregunta.getArea().getCodigo()+","+","+pregunta.getRespuesta_correcta()+")");
-            
-          stt=BDConnect.connect().createStatement();
-          ResultSet rs=stt.executeQuery("SELECT MAX(codigo) FROM Pregunta");
-          rs.next();
-          pregunta.setCodigo(rs.getInt(1))
-                  ;
-           Respuesta[]resp=pregunta.getRespuestas();
-           for(int i=0;i<NUM_RESPUESTAS;i++){
-                stat=BDConnect.connect().createStatement();
-                stat.executeUpdate("INSERT INTO Respuesta(codigo,contenido,contenido_pregunta) "
-                        + "VALUES("+resp[i].getCodigo()+",'"+resp[i].getContenido()+"',"+pregunta.getCodigo()+")");
-           }
-            guardado=true;
-        }catch(SQLException e){
-            BDConnect.showMYSQLerrors(e);
-            guardado=false;
-        }
-        
-        return guardado;
-    }*/
     public static boolean save(Pregunta pregunta, int pos) {
         Connection con = BDConnect.connect();
         Statement stmt = null;//guarda pregunta 
@@ -171,7 +139,11 @@ public class PreguntaDAO {
 
         return guardado;
     }
-    
+    /**
+     * Incrementa el numero de veces que ha salido una pregunta.
+     * @param p
+     * @throws SQLException 
+     */
     public static void incrementarVeces(Pregunta p) throws SQLException{
         Statement stat = ConexionDB.BDConnect.connect().createStatement();
         try{
@@ -185,8 +157,8 @@ public class PreguntaDAO {
     }
 
     /**
-     *
-     * @return preguntas Carga todas las preguntas en un AL
+     * Carga todas las preguntas en un ArrayList
+     * @return preguntas 
      */
     public static ArrayList<PreguntaGrupo> loadAll() {
 

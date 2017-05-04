@@ -10,15 +10,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *
- * @author Lliurex
+ * La clase que se encarga  de hacer las conexiones con la base de datos
+ * @author Jaume Segarra
  */
 public class BDConnect {
+    
     public static String conData = "jdbc:mysql://127.0.0.1:3306/conocevalenciadb?" +
                                            "user=root&password=";
     
     /**
      * Metodo utilizado para conectar con la base de datos
+     * @author Jaume Segarra
      * @return 
      */
     public static Connection connect(){
@@ -37,6 +39,7 @@ public class BDConnect {
 
     /**
      * Metodo que utilizamos para mostrar errores
+     * @author Jaume Segarra
      * @param ex 
      */
     public static void showMYSQLerrors(SQLException ex){        
