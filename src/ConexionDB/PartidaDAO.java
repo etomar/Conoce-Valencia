@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 /**
  *
  * @author Ruben y J.Bujeda
@@ -35,7 +36,8 @@ public class PartidaDAO {
             String query = "INSERT INTO Sesion VALUES("
 		+ "\"" + partida.getRespuestas_correctas() + "\", "
 		+ "\"" + partida.getFecha() + "\", "
-		+ "\"" + partida.getG() +"\")";
+                + "\"" + partida.getG() + "\", "
+		+ "\"" + partida.DevolverDuracion(partida.getFecha(), partida.getFin()) +"\")";
             
 		Statement stat;
                 
