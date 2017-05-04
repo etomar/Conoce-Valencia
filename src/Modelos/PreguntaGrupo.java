@@ -13,12 +13,12 @@ import java.sql.SQLException;
  * @author Lliurex
  */
 public class PreguntaGrupo extends Pregunta {
-    private int respuesta_contestada;
+    private int respuesta_contestada=0;
 
-    public PreguntaGrupo(int codigo, String enunciado, Respuesta[] respuestas, int respuesta_correcta, Area area, int dificultad, int veces, int respuesta_contestada) throws SQLException {
+    public PreguntaGrupo(int codigo, String enunciado, Respuesta[] respuestas, int respuesta_correcta, Area area, int dificultad, int veces) throws SQLException {
         super(codigo, enunciado, respuestas, respuesta_correcta, area, dificultad, veces);
-        this.respuesta_contestada = respuesta_contestada;
-        incrementarVeces();
+        this.respuesta_contestada = 0;
+        //incrementarVeces();
     }
     
     public void incrementarVeces() throws SQLException{

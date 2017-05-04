@@ -72,7 +72,7 @@ public class PreguntaDAO {
             int cod = rs.getInt("codigo");
             String contenido = rs.getString("contenido");
             int veces = rs.getInt("veces");
-            int dificultad = rs.getInt("difcultad");
+            int dificultad = rs.getInt("dificultad");
             int cod_tematica = rs.getInt("codigo_tematica");
             ResultSet result = stm.executeQuery("SELECT nombre FROM Tematica WHERE codigo_tematica = " + cod_tematica);
             result.next();
@@ -129,33 +129,40 @@ public class PreguntaDAO {
         return guardado;
     }*/
     public static boolean save(Pregunta pregunta, int pos) {
+        Connection con = BDConnect.connect();
         Statement stmt = null;//guarda pregunta 
-        Statement stat = null;//guarda respuesta
+        // = null;//guarda respuesta
         Statement stt = null;//saca el codigo de la pregunta creada
         Boolean guardado = false;
         try {
-            stmt = BDConnect.connect().createStatement();
+            stmt = con.createStatement();
             stmt.executeUpdate("INSERT INTO Pregunta(contenido,dificultad,"
                     + "codigo_tematica) VALUES ('" + pregunta.getEnunciado()
                     + "'," + pregunta.getDificultad() + "," + pregunta.getArea().getCodigo() + ")");
 
-            stt = BDConnect.connect().createStatement();
+            stt = con.createStatement();
             ResultSet rs = stt.executeQuery("SELECT MAX(codigo) FROM Pregunta");
             rs.next();
             pregunta.setCodigo(rs.getInt(1));
             Respuesta[] resp = pregunta.getRespuestas();
+            
             for (int i = 0; i < NUM_RESPUESTAS; i++) {
-                stat = BDConnect.connect().createStatement();
-                stat.executeUpdate("INSERT INTO Respuesta(contenido,contenido_pregunta) "
+                Statement stat = con.createStatement();
+                stat.executeUpdate("INSERT INTO Respuesta(contenido,codigo_pregunta) "
                         + "VALUES('" + resp[i].getContenido() + "'," + pregunta.getCodigo() + ")");
-                Statement stt1 = BDConnect.connect().createStatement();
+                Statement stt1 = con.createStatement();
                 ResultSet rs1 = stt1.executeQuery("SELECT MAX(codigo) FROM Respuesta");
                 rs1.next();
                 resp[i].setCodigo(rs1.getInt(1));
+                stt1.close();
+                stat.close();
             }
-            Statement stt2 = BDConnect.connect().createStatement();
+            Statement stt2 = con.createStatement();
             stt2.executeUpdate("UPDATE Pregunta SET codigo_respuesta=" + resp[pos].getCodigo() + " WHERE codigo=" + pregunta.getCodigo());
-
+            stmt.close();
+            
+            stt.close();
+            con.close();
             guardado = true;
         } catch (SQLException e) {
             BDConnect.showMYSQLerrors(e);
@@ -168,7 +175,7 @@ public class PreguntaDAO {
     public static void incrementarVeces(Pregunta p) throws SQLException{
         Statement stat = ConexionDB.BDConnect.connect().createStatement();
         try{
-            stat.executeUpdate("UPDATE conocevalencia.PREGUNTA  SET veces="+p.getVeces()+1+" WHERE CODIGO="+p.getCodigo());
+            stat.executeUpdate("UPDATE Pregunta SET veces="+p.getVeces()+1+" WHERE codigo="+p.getCodigo());
             p.setVeces(p.getVeces()+1);
         }catch(SQLException e){
             e.printStackTrace();
@@ -181,44 +188,49 @@ public class PreguntaDAO {
      *
      * @return preguntas Carga todas las preguntas en un AL
      */
-    public static ArrayList<Pregunta> loadAll() {
+    public static ArrayList<PreguntaGrupo> loadAll() {
 
-        ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
+        ArrayList<PreguntaGrupo> preguntas = new ArrayList<PreguntaGrupo>();
         Statement stmt = null;//seleccionar la pregunta
         Statement stat = null;//seleccionar las respuesta de la pregunta
         Statement stm = null;//seleccionar el area
         try {
             int contador = 0;//aumenta la posicion del vector
-            Respuesta[] respuesta = new Respuesta[NUM_RESPUESTAS];
+            
 
             stmt = BDConnect.connect().createStatement();
             stat = BDConnect.connect().createStatement();
             stm = BDConnect.connect().createStatement();
 
-            ResultSet res = stat.executeQuery("SELECT (*) FROM Respuesta");
+            ResultSet res = stat.executeQuery("SELECT * FROM Pregunta");
 
             while (res.next()) {
+                contador=0;
+                Respuesta[] respuesta = new Respuesta[NUM_RESPUESTAS];
                 int cod = res.getInt("codigo");
                 String contenido = res.getString("contenido");
-                respuesta[contador] = new Respuesta(cod, contenido);
-                contador++;
-                ResultSet rs = stmt.executeQuery("SELECT (*) FROM Pregunta WHERE codigo=" + cod);
-                rs.next();
-
-                int codigo = rs.getInt("codigo");
-                String cont = rs.getString("contenido");
-                int veces = rs.getInt("veces");
-                int dificultad = rs.getInt("difcultad");
-                int cod_tematica = rs.getInt("codigo_tematica");
+                int veces = res.getInt("veces");
+                int dificultad = res.getInt("dificultad");
+                int cod_tematica = res.getInt("codigo_tematica");
+                int cod_respuesta = res.getInt("codigo_respuesta");
+                
                 ResultSet result = stm.executeQuery("SELECT nombre FROM Tematica WHERE codigo_tematica = " + cod_tematica);
                 result.next();
                 String nombre = result.getString("nombre");
 
                 Area area = new Area(cod_tematica, nombre);
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Respuesta WHERE codigo_pregunta=" + cod);
+                while(rs.next()){
+                    
+                    int codigo = rs.getInt("codigo");
+                String cont = rs.getString("contenido");
+                
+                respuesta[contador] = new Respuesta(codigo, cont);
+                    
+                contador++;
+                }
 
-                int cod_respuesta = rs.getInt("codigo_respuesta");
-
-                preguntas.add(new Pregunta(codigo, cont, respuesta, cod_respuesta, area, dificultad, veces));
+                preguntas.add(new PreguntaGrupo(cod, contenido, respuesta, cod_respuesta, area, dificultad, veces));
             }
             stmt.close();
             stat.close();
