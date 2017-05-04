@@ -82,7 +82,9 @@ public class Partida {
 
         return d;
     }
-
+        public void incrementarRespuestasCorrectas(){
+        this.respuestas_correctas++;
+    }
     /*
         Registrar los resultados de la partida
      */
