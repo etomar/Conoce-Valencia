@@ -100,7 +100,7 @@ public class Partida {
                 resp=r;
         }
         return resp;
-    }
+    } 
     
     public Calendar getFecha() {
         return fecha;
