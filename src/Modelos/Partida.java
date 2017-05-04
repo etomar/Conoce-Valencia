@@ -32,7 +32,7 @@ public class Partida {
      * @param g 
      */
     public Partida(Grupo g) {
-        preguntas = new PreguntaGrupo[10];
+        preguntas = new PreguntaGrupo[20];
         fecha = Calendar.getInstance();
         this.g = g;
         this.respuestas_correctas = 0;
@@ -45,9 +45,9 @@ public class Partida {
      */
     public PreguntaGrupo[] cargarPreguntas() throws SQLException {
         ArrayList<PreguntaGrupo> al = PreguntaDAO.loadAll();
-        int vp[] = new int [10];
+        int vp[] = new int [20];
         
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             
             int ran = (int)new Random().nextInt(al.size());
             boolean correcto = true;
@@ -87,15 +87,15 @@ public class Partida {
      */
     public String DevolverDuracion(Calendar fecha, Calendar fin) {
         fin = Calendar.getInstance();
-        int h =  fin.get(Calendar.HOUR_OF_DAY)-fecha.get(Calendar.HOUR_OF_DAY);
-        int m =  fin .get(Calendar.MINUTE)-fecha.get(Calendar.MINUTE);
-        int s = fin.get(Calendar.SECOND)-fecha.get(Calendar.SECOND);
-        String hora = Integer.toString(h);
-        String min = Integer.toString(m);
-        String sec = Integer.toString(s);
-        String d = hora + ":" + min + ":" + sec;
+        //int h =  fin.get(Calendar.HOUR_OF_DAY)+fecha.get(Calendar.HOUR_OF_DAY);
+        int m =  fin .get(Calendar.MINUTE)+fecha.get(Calendar.MINUTE);
+        int s = fin.get(Calendar.SECOND)+fecha.get(Calendar.SECOND);
+        //String hora = Integer.toString(h);
+        int segundos=((m*60)+fin.get(Calendar.SECOND))-fecha.get(Calendar.SECOND);
+        String sec = Integer.toString(segundos);
+        String total = sec+" segundos";
 
-        return d;
+        return total;
     }
         public void incrementarRespuestasCorrectas(){
         this.respuestas_correctas++;

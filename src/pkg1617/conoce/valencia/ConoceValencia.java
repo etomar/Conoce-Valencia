@@ -84,11 +84,11 @@ public class ConoceValencia {
     public static int menu() {
 
         int eleccion = 0;
+        System.out.println("");
         System.out.println("************************************************");
         System.out.println("*               CONOCE VALÈNCIA                *");
         System.out.println("************************************************");
         System.out.println("                                                ");
-        System.out.println("   Elija una opción:                            ");
         System.out.println("   1: Generar un nuevo test                     ");
         System.out.println("   2: Añadir preguntas                          ");
         System.out.println("   3: Eliminar preguntas                        ");
@@ -97,8 +97,10 @@ public class ConoceValencia {
         System.out.println("   6: Estadísticas                              ");
         System.out.println("   0: Salir del programa                        ");
         System.out.println("________________________________________________");
+        System.out.print("   Elija una opción: ");
         eleccion = sc.nextInt();
         sc.nextLine();
+        System.out.println("");
         return eleccion;
     }
 
@@ -117,15 +119,17 @@ public class ConoceValencia {
             switch (eleccion) {
 
                 case 1:
-                    System.out.println("¡Empezamos a jugar!");
-                    System.out.println("________________________________________________");
-                    System.out.println("Indica el nombre de tu grupo: ");
+                    System.out.println("*************************");
+                    System.out.println("*  ¡Empezamos a jugar!  *");
+                    System.out.println("*************************");
+                    System.out.println("");
+                    System.out.print("Indica el nombre de tu grupo: ");
                     String nombre;
                     nombre = sc.nextLine();
                     Grupo g = new Grupo(nombre);
-                    System.out.println("Elige la dificultad del juego");
+                    System.out.print("Elige la dificultad del juego: ");
                     int dificultad = sc.nextInt();
-                    
+                    System.out.println("");
                     //Cargamos las preguntas de la partida.
                     Partida p = new Partida(g);
                     PreguntaGrupo[] pgaux = p.cargarPreguntas();
@@ -133,17 +137,21 @@ public class ConoceValencia {
                     
                     
                     //Bucle de preguntas.
-                    for(int i=0;i<10;i++){
-                        PreguntaGrupo pg= pgaux[i];
-                        System.out.println("Área de la pregunta: "+pg.getArea());
-                        System.out.println(pg.getEnunciado());
+                    int con =1;
+                    for(PreguntaGrupo pg: pgaux){
+                        System.out.println("");
+                        
+                        System.out.println("-"+pg.getArea().getNombre()+"-");
+                        
+                        System.out.println(con+"- "+pg.getEnunciado());
                         for(int j=0;j<pg.getRespuestas().length;j++){
                             System.out.println(opciones[j]+". "+pg.getRespuestas()[j].getContenido());
                         }
                         
                         char a = '0';
                         do{
-                            System.out.println("Seleccionar respuesta");
+                            System.out.println("");
+                            System.out.print("Seleccionar respuesta: ");
                             a = sc.next().toUpperCase().charAt(0);
                         }while(a!='A' && a!='B' && a!='C' && a!='D'); 
                         
@@ -163,7 +171,8 @@ public class ConoceValencia {
                         }
                         if(pg.validar()){
                             p.incrementarRespuestasCorrectas();
-                        }   
+                        } 
+                        con++;
                     }
                     
                     //Resultados del test
@@ -261,17 +270,21 @@ public class ConoceValencia {
                     System.out.println("   6: Mostrar preguntas por área        ");
 
                     int eleccion2=0;
+                    System.out.print("Elija una opción: ");
                     eleccion2=sc.nextInt();
-                    
+                    System.out.println("");
                     switch (eleccion2){
                         
                         case 1:
                             Statement stmt=BDConnect.connect().createStatement();
                             ResultSet rs=stmt.executeQuery("SELECT grupo,aciertos as puntuacion,duracion from Sesion order by aciertos,duracion");
+                            
+                            System.out.println("");
                             while(rs.next()){
                                 System.out.println("Grupo: "+rs.getString(1));
                                 System.out.println("Puntuación: "+rs.getInt(2));
                                 System.out.println("Duración: "+rs.getString(3));
+                                System.out.println("");
                             }
                             stmt.close();
                             break;
