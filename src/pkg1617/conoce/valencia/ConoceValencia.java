@@ -87,6 +87,7 @@ public class ConoceValencia {
         System.out.println("   0: Salir del programa                      ");
         System.out.println("______________________________________________");
         eleccion = sc.nextInt();
+        sc.nextLine();
         return eleccion;
     }
 
@@ -109,8 +110,9 @@ public class ConoceValencia {
                     System.out.println("Elige la dificultad del juego");
                     int dificultad = sc.nextInt();
                     Partida p = new Partida(g);
+                    PreguntaGrupo[] pgaux = p.cargarPreguntas();
                     for(int i=0;i<10;i++){
-                        PreguntaGrupo pg = p.cargarPreguntas()[i];
+                        PreguntaGrupo pg= pgaux[i];
                         System.out.println(pg.getEnunciado());
                         for(int j=0;j<pg.getRespuestas().length;j++){
                             System.out.println(pg.getRespuestas()[j].getContenido());
@@ -185,7 +187,7 @@ public class ConoceValencia {
                     break;
 
                 case 4:
-                    ArrayList<Pregunta> all = PreguntaDAO.loadAll();
+                    ArrayList<PreguntaGrupo> all = PreguntaDAO.loadAll();
                     System.out.println();
                     String pasaPagina;
                     do {

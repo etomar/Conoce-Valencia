@@ -28,7 +28,7 @@ public class GrupoDAO {
         boolean existe = false;
         Statement stat = BDConnect.connect().createStatement();
         try {
-            ResultSet rs = stat.executeQuery("SELECT * FROM conocevalencia.GRUPO WHERE=" + nombre + ";");
+            ResultSet rs = stat.executeQuery("SELECT * FROM Grupo WHERE nombre='" + nombre + "'");
             if (rs.next()) {
                 existe = true;
             }
@@ -51,7 +51,7 @@ public class GrupoDAO {
         if (!exist(grupo.getNombre())) {
             Statement stat = BDConnect.connect().createStatement();
             try {
-                stat.executeUpdate("INSERT INTO conocevalencia.GRUPO(nombre) VALUES(" + grupo.getNombre() + ");");
+                stat.executeUpdate("INSERT INTO Grupo(nombre) VALUES('" + grupo.getNombre() + "')");
                 guardado = true;
             } catch (SQLException e) {
                 e.printStackTrace();
