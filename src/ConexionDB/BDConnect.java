@@ -40,6 +40,7 @@ public class BDConnect {
      * @param ex 
      */
     public static void showMYSQLerrors(SQLException ex){        
+        ex.printStackTrace();
         System.out.println("SQLException: " + ex.getMessage());
         System.out.println("SQLState: " + ex.getSQLState());
         System.out.println("VendorError: " + ex.getErrorCode());

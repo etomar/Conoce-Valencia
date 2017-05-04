@@ -33,11 +33,9 @@ public class PartidaDAO {
                     if(partida.getPreguntas()[i].validar())
                         respuestas_correctas++;*/
             
-            String query = "INSERT INTO Sesion VALUES("
-		+ "\"" + partida.getRespuestas_correctas() + "\", "
-		+ "\"" + partida.getFecha() + "\", "
-                + "\"" + partida.getG() + "\", "
-		+ "\"" + partida.DevolverDuracion(partida.getFecha(), partida.getFin()) +"\")";
+            String query = "INSERT INTO Sesion (aciertos, grupo, duracion) VALUES("
+		+ partida.getRespuestas_correctas() + ", '" + partida.getG().getNombre() + "','"
+		+ partida.DevolverDuracion(partida.getFecha(), partida.getFin()) +"')";
             
 		Statement stat;
                 
@@ -45,7 +43,7 @@ public class PartidaDAO {
 		stat.executeUpdate(query);
 		
                 Statement stt=BDConnect.connect().createStatement();
-                ResultSet rs=stt.executeQuery("SELECT MAX(codigo) FROM Partida");
+                ResultSet rs=stt.executeQuery("SELECT MAX(codigo) FROM Sesion");
                 rs.next();
                 partida.setCodigo(rs.getInt(1));
                 
@@ -56,7 +54,7 @@ public class PartidaDAO {
 		System.out.println("Partida Guardada");
 			 
 	        } catch (SQLException ex) {
-	        	
+	        	BDConnect.showMYSQLerrors(ex);
 	            System.out.println("Error al guardar partida");
 	            
 	        }
@@ -80,7 +78,7 @@ public class PartidaDAO {
                 stat = BDConnect.connect().createStatement();
 		stat.executeUpdate(query);
 			 
-		System.out.println("Respuesta Guardada");
+		
 			 
 	        } catch (SQLException ex) {
 	        	

@@ -220,8 +220,8 @@ public class PreguntaDAO {
 
                 Area area = new Area(cod_tematica, nombre);
                 ResultSet rs = stmt.executeQuery("SELECT * FROM Respuesta WHERE codigo_pregunta=" + cod);
-                while(contador<NUM_RESPUESTAS){
-                    rs.next();
+                while(rs.next()){
+                    
                     int codigo = rs.getInt("codigo");
                 String cont = rs.getString("contenido");
                 

@@ -95,7 +95,7 @@ public class ConoceValencia {
 
         int eleccion;
         do {
-            clear();
+            //clear();
             eleccion = menu();
             ArrayList<Area> areas = AreaDAO.loadAll();
             switch (eleccion) {
@@ -111,11 +111,12 @@ public class ConoceValencia {
                     int dificultad = sc.nextInt();
                     Partida p = new Partida(g);
                     PreguntaGrupo[] pgaux = p.cargarPreguntas();
+                    char []opciones={'A','B','C','D'};
                     for(int i=0;i<10;i++){
                         PreguntaGrupo pg= pgaux[i];
                         System.out.println(pg.getEnunciado());
                         for(int j=0;j<pg.getRespuestas().length;j++){
-                            System.out.println(pg.getRespuestas()[j].getContenido());
+                            System.out.println(opciones[j]+". "+pg.getRespuestas()[j].getContenido());
                         }
                         System.out.println("Seleccionar respuesta");
                         char a =sc.next().toUpperCase().charAt(0);
