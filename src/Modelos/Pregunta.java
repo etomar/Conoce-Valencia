@@ -6,8 +6,8 @@
 package Modelos;
 
 /**
- *
- * @author Lliurex
+ * Esta clase crea el objeto pregunta.
+ * @author Jaume Segarra
  */
 public class Pregunta {
     private int codigo;
@@ -18,6 +18,16 @@ public class Pregunta {
     private int veces;
     private int dificultad;
     
+    /**
+     * Crea el objeto.
+     * @param codigo
+     * @param enunciado
+     * @param respuestas
+     * @param respuesta_correcta
+     * @param area
+     * @param dificultad
+     * @param veces 
+     */
     public Pregunta(int codigo, String enunciado, Respuesta[] respuestas, int respuesta_correcta,Area area, int dificultad, int veces){
         this.codigo=codigo;
         this.enunciado=enunciado;
@@ -28,6 +38,9 @@ public class Pregunta {
         this.veces=veces;
     }
     
+    /**
+     * Contructor vacio.
+     */
     public Pregunta(){
         
     }

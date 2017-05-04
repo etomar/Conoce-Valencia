@@ -11,18 +11,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Lliurex
+ * Esta clase crea el objeto grupo
+ * @author Ruben, J.Bujeda, A.Sahuquillo, Manuel
  */
 public class Grupo {
     
     private String nombre;
     
-    
     public Grupo(String nombre){
         
         this.nombre = nombre;
-        
         
         try {
             if(!GrupoDAO.exist(nombre))

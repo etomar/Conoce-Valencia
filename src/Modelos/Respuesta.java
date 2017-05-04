@@ -6,8 +6,8 @@
 package Modelos;
 
 /**
- *
- * @author sx
+ * Esta clase crea el objeto respuesta.
+ * @author Jaume Segarra
  */
 public class Respuesta {
     private int codigo;
