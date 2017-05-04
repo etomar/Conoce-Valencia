@@ -76,17 +76,19 @@ public class ConoceValencia {
     public static int menu() {
 
         int eleccion = 0;
-        System.out.println("               CONOCE VALÈNCIA                ");
-        System.out.println("                    MENÚ                      ");
-        System.out.println("   Elija una opción:                          ");
-        System.out.println("   1: Generar un nuevo test                   ");
-        System.out.println("   2: Añadir preguntas                        ");
-        System.out.println("   3: Eliminar preguntas                      ");
-        System.out.println("   4: Mostrar preguntas del almacén           ");
-        System.out.println("   5: Importar preguntas de fichero           ");
-        System.out.println("   6: Estadísticas                            ");
-        System.out.println("   0: Salir del programa                      ");
-        System.out.println("______________________________________________");
+        System.out.println("************************************************");
+        System.out.println("*               CONOCE VALÈNCIA                *");
+        System.out.println("************************************************");
+        System.out.println("                                                ");
+        System.out.println("   Elija una opción:                            ");
+        System.out.println("   1: Generar un nuevo test                     ");
+        System.out.println("   2: Añadir preguntas                          ");
+        System.out.println("   3: Eliminar preguntas                        ");
+        System.out.println("   4: Mostrar preguntas del almacén             ");
+        System.out.println("   5: Importar preguntas de fichero             ");
+        System.out.println("   6: Estadísticas                              ");
+        System.out.println("   0: Salir del programa                        ");
+        System.out.println("________________________________________________");
         eleccion = sc.nextInt();
         sc.nextLine();
         return eleccion;
@@ -103,18 +105,24 @@ public class ConoceValencia {
 
                 case 1:
                     System.out.println("¡Empezamos a jugar!");
-                    System.out.println("______________________________________________");
+                    System.out.println("________________________________________________");
                     System.out.println("Indica el nombre de tu grupo: ");
                     String nombre;
                     nombre = sc.nextLine();
                     Grupo g = new Grupo(nombre);
                     System.out.println("Elige la dificultad del juego");
                     int dificultad = sc.nextInt();
+                    
+                    //Cargamos las preguntas de la partida.
                     Partida p = new Partida(g);
                     PreguntaGrupo[] pgaux = p.cargarPreguntas();
                     char []opciones={'A','B','C','D'};
+                    
+                    
+                    //Bucle de preguntas.
                     for(int i=0;i<10;i++){
                         PreguntaGrupo pg= pgaux[i];
+                        System.out.println("Área de la pregunta: "+pg.getArea());
                         System.out.println(pg.getEnunciado());
                         for(int j=0;j<pg.getRespuestas().length;j++){
                             System.out.println(opciones[j]+". "+pg.getRespuestas()[j].getContenido());
@@ -144,21 +152,26 @@ public class ConoceValencia {
                             p.incrementarRespuestasCorrectas();
                         }   
                     }
+                    
+                    //Resultados del test
                     System.out.println("RESULTADOS\n------------------");
                     for(PreguntaGrupo p_ : p.getPreguntas()){
                         System.out.println(p_.getEnunciado());
                         System.out.println("Respuesta correcta: "+ p.findRespuesta(p_, p_.getRespuesta_correcta()).getContenido());
                         System.out.println("Respuesta escogida: "+ p.findRespuesta(p_, p_.getRespuesta_contestada()).getContenido());
+                        
                         if(p_.validar())
                             System.out.println("Respuesta Correcta!");
+                            System.out.println("");
                     }
+                    
                     System.out.println("Número de respuestas correctas: "+p.getRespuestas_correctas());
                     p.finalizar();
                     break;
 
                 case 2:
                     System.out.println("Añadir pregunta");
-                    System.out.println("______________________________________________");
+                    System.out.println("________________________________________________");
                     int codigo = 0;
                     String enunciado = "";
                     Respuesta[] respuestas = new Respuesta[4];
