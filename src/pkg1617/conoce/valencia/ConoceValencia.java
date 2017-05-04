@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /*@autor iguisado*/
@@ -84,6 +84,7 @@ public class ConoceValencia {
         System.out.println("   3: Eliminar preguntas                      ");
         System.out.println("   4: Mostrar preguntas del almacén           ");
         System.out.println("   5: Importar preguntas de fichero           ");
+        System.out.println("   6: Estadísticas                            ");
         System.out.println("   0: Salir del programa                      ");
         System.out.println("______________________________________________");
         eleccion = sc.nextInt();
@@ -213,6 +214,79 @@ public class ConoceValencia {
                     String nombreFichero=sc.nextLine();
                     importarPreguntas(nombreFichero,areas);
                     break;
+                    
+                case 6:
+                    System.out.println("   1: Puntuaciones                            ");
+                    System.out.println("   2: Consulte la media de dificultad         ");
+                    System.out.println("   3: Número de preguntas no usadas en ningún test ");
+                    System.out.println("   4: Número de preguntas usadas en los test ");
+                    System.out.println("   5: Mostrar preguntas por dificultad        ");
+
+                    int eleccion2=0;
+                    eleccion2=sc.nextInt();
+                    
+                    switch (eleccion2){
+                        
+                        case 1:
+                            Statement stmt=BDConnect.connect().createStatement();
+                            ResultSet rs=stmt.executeQuery("SELECT fecha,grupo,aciertos as puntuacion,duracion from Sesion order by aciertos,duracion");
+                            while(rs.next()){
+                                System.out.println("Fecha: "+1);
+                                System.out.println("Grupo: "+2);
+                                System.out.println("Puntuación: "+3);
+                                System.out.println("Duración: "+4);
+                            }
+                            stmt.close();
+                            break;
+                        case 2: 
+                            Statement stmt1=BDConnect.connect().createStatement();
+                            ResultSet res=stmt1.executeQuery("SELECT AVG(dificultad) as Media dificultad from Pregunta");
+                                System.out.println("Media de dificultad "+1);
+                            stmt1.close();
+
+                        break;
+                        case 3:
+                            Statement stmt2=BDConnect.connect().createStatement();
+                            ResultSet res2=stmt2.executeQuery("SELECT COUNT(codigo) from Pregunta WHERE codigo_respuesta IN(SELECT codigo_respuesta from Pregunta NOT IN(SELECT codigo_respuesta from Responde)) ");
+                                System.out.println("Preguntas no usadas "+1);
+
+                            stmt2.close();  
+
+                            break;
+                        case 4:
+                            Statement stmt3=BDConnect.connect().createStatement();
+                            ResultSet res3=stmt3.executeQuery("SELECT COUNT(codigo) from Pregunta WHERE codigo_respuesta IN(SELECT codigo_respuesta from Pregunta IN(SELECT codigo_respuesta from Responde)) ");
+                                System.out.println("Preguntas usadas "+1);
+
+                            stmt3.close(); 
+                            break;
+                        case 5:
+                            System.out.println("1 Muy fácil");
+                            System.out.println("2 Fácil");
+                            System.out.println("3 Normal");
+                            System.out.println("4 Difícil");
+                            System.out.println("5 Muy difícil");
+                            
+                            int nvldificultad=sc.nextInt();
+                            
+                            
+                            System.out.println("¿Qué nivel quieres ver?");
+                            Statement stmt4=BDConnect.connect().createStatement();
+                            ResultSet res4=stmt4.executeQuery("SELECT dificultad, contenido FROM Pregunta WHERE dificultad="+nvldificultad);
+                            while(res4.next()){
+                                System.out.println("Nivel: "+1+", Pregunta: "+2);
+                            }
+                            stmt4.close();
+                            
+                            break;
+                    
+                        default:
+                            System.out.println("¡Ops! No has introducido una opción del menú.. vuelve a intentarlo :) ");
+                            break;
+                        
+                        
+                    }
+                    break;    
 
                 case 0:
 
