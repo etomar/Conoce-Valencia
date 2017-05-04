@@ -92,7 +92,16 @@ public class Partida {
         duracion = DevolverDuracion(this.fecha, this.fin);
         PartidaDAO.save(this);
     }
-
+    
+    public Respuesta findRespuesta(Pregunta preg, int codigo){
+        Respuesta resp = null;
+        for(Respuesta r : preg.getRespuestas()){
+            if(r.getCodigo() == codigo)
+                resp=r;
+        }
+        return resp;
+    } 
+    
     public Calendar getFecha() {
         return fecha;
     }
