@@ -119,9 +119,12 @@ public class ConoceValencia {
                         for(int j=0;j<pg.getRespuestas().length;j++){
                             System.out.println(opciones[j]+". "+pg.getRespuestas()[j].getContenido());
                         }
-                        System.out.println("Seleccionar respuesta");
-                        char a =sc.next().toUpperCase().charAt(0);
-                        //comprobar que el caracter esté entre A y D
+                        
+                        char a = '0';
+                        do{
+                            System.out.println("Seleccionar respuesta");
+                            a = sc.next().toUpperCase().charAt(0);
+                        }while(a!='A' && a!='B' && a!='C' && a!='D');
                         
                         switch(a){
                             case 'A':
@@ -141,7 +144,15 @@ public class ConoceValencia {
                             p.incrementarRespuestasCorrectas();
                         }   
                     }
-                    System.out.println("Respuestas correctas: "+p.getRespuestas_correctas());
+                    System.out.println("RESULTADOS\n------------------");
+                    for(PreguntaGrupo p_ : p.getPreguntas()){
+                        System.out.println(p_.getEnunciado());
+                        System.out.println("Respuesta correcta: "+ p.findRespuesta(p_, p_.getRespuesta_correcta()).getContenido());
+                        System.out.println("Respuesta escogida: "+ p.findRespuesta(p_, p_.getRespuesta_contestada()).getContenido());
+                        if(p_.validar())
+                            System.out.println("Respuesta Correcta!");
+                    }
+                    System.out.println("Número de respuestas correctas: "+p.getRespuestas_correctas());
                     p.finalizar();
                     break;
 
