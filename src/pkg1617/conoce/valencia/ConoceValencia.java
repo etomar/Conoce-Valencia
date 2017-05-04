@@ -232,6 +232,7 @@ public class ConoceValencia {
                     System.out.println("   3: Número de preguntas no usadas en ningún test ");
                     System.out.println("   4: Número de preguntas usadas en los test ");
                     System.out.println("   5: Mostrar preguntas por dificultad        ");
+                    System.out.println("   6: Mostrar preguntas por área        ");
 
                     int eleccion2=0;
                     eleccion2=sc.nextInt();
@@ -240,26 +241,25 @@ public class ConoceValencia {
                         
                         case 1:
                             Statement stmt=BDConnect.connect().createStatement();
-                            ResultSet rs=stmt.executeQuery("SELECT fecha,grupo,aciertos as puntuacion,duracion from Sesion order by aciertos,duracion");
+                            ResultSet rs=stmt.executeQuery("SELECT grupo,aciertos as puntuacion,duracion from Sesion order by aciertos,duracion");
                             while(rs.next()){
-                                System.out.println("Fecha: "+1);
-                                System.out.println("Grupo: "+2);
-                                System.out.println("Puntuación: "+3);
-                                System.out.println("Duración: "+4);
+                                System.out.println("Grupo: "+rs.getInt(1));
+                                System.out.println("Puntuación: "+rs.getInt(2));
+                                System.out.println("Duración: "+rs.getString(3));
                             }
                             stmt.close();
                             break;
                         case 2: 
                             Statement stmt1=BDConnect.connect().createStatement();
                             ResultSet res=stmt1.executeQuery("SELECT AVG(dificultad) as Media dificultad from Pregunta");
-                                System.out.println("Media de dificultad "+1);
+                                System.out.println("Media de dificultad "+res.getInt(1));
                             stmt1.close();
 
                         break;
                         case 3:
                             Statement stmt2=BDConnect.connect().createStatement();
                             ResultSet res2=stmt2.executeQuery("SELECT COUNT(codigo) from Pregunta WHERE codigo_respuesta IN(SELECT codigo_respuesta from Pregunta NOT IN(SELECT codigo_respuesta from Responde)) ");
-                                System.out.println("Preguntas no usadas "+1);
+                                System.out.println("Preguntas no usadas "+res2.getInt(1));
 
                             stmt2.close();  
 
@@ -267,7 +267,7 @@ public class ConoceValencia {
                         case 4:
                             Statement stmt3=BDConnect.connect().createStatement();
                             ResultSet res3=stmt3.executeQuery("SELECT COUNT(codigo) from Pregunta WHERE codigo_respuesta IN(SELECT codigo_respuesta from Pregunta IN(SELECT codigo_respuesta from Responde)) ");
-                                System.out.println("Preguntas usadas "+1);
+                                System.out.println("Preguntas usadas "+res3.getInt(1));
 
                             stmt3.close(); 
                             break;
@@ -285,10 +285,29 @@ public class ConoceValencia {
                             Statement stmt4=BDConnect.connect().createStatement();
                             ResultSet res4=stmt4.executeQuery("SELECT dificultad, contenido FROM Pregunta WHERE dificultad="+nvldificultad);
                             while(res4.next()){
-                                System.out.println("Nivel: "+1+", Pregunta: "+2);
+                                System.out.println("Nivel: "+res4.getInt(1)+", Pregunta: "+res4.getString(2));
                             }
                             stmt4.close();
                             
+                            break;
+                            
+                        case 6:
+                            System.out.println("1 Valencia Romana");
+                            System.out.println("2 Valencia Medieval");
+                            System.out.println("3 Valencia Moderna");
+                            System.out.println("4 Valencia Contemporánea");
+                            System.out.println("5 Valencia desde la guerra civil hasta el presente");
+                            
+                            int conarea=sc.nextInt();
+                            
+                            
+                            System.out.println("¿Qué nivel quieres ver?");
+                            Statement stmt5=BDConnect.connect().createStatement();
+                            ResultSet res5=stmt5.executeQuery("SELECT codigo_tematica, contenido FROM Pregunta WHERE codigo_tematica="+conarea);
+                            while(res5.next()){
+                                System.out.println("Cod.Área: "+res5.getInt(1)+", Pregunta: "+res5.getString(2));
+                            }
+                            stmt5.close();
                             break;
                     
                         default:
