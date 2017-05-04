@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- *
+ * Esta clase crea el objeto partida y contine los metodos que lo administran.
  * @author jcfong
  * @author fjgalindo
  * @since 02-05-2017
@@ -27,6 +27,10 @@ public class Partida {
     private Calendar fin;
     private String duracion;
 
+    /**
+     * Crea el objeto.
+     * @param g 
+     */
     public Partida(Grupo g) {
         preguntas = new PreguntaGrupo[10];
         fecha = Calendar.getInstance();
@@ -34,6 +38,11 @@ public class Partida {
         this.respuestas_correctas = 0;
     }
 
+    /**
+     * Este metodo carga las preguntas que deberan contestar los grupos.
+     * @return
+     * @throws SQLException 
+     */
     public PreguntaGrupo[] cargarPreguntas() throws SQLException {
         ArrayList<PreguntaGrupo> al = PreguntaDAO.loadAll();
         int vp[] = new int [10];
@@ -70,6 +79,12 @@ public class Partida {
         return preguntas;
     }
 
+    /**
+     * Con este metodo obtenemos el tiempo que cada grupo tarde en constestar todas las preguntas.
+     * @param fecha
+     * @param fin
+     * @return 
+     */
     public String DevolverDuracion(Calendar fecha, Calendar fin) {
         fin = Calendar.getInstance();
         int h =  fin.get(Calendar.HOUR_OF_DAY)-fecha.get(Calendar.HOUR_OF_DAY);
@@ -85,14 +100,21 @@ public class Partida {
         public void incrementarRespuestasCorrectas(){
         this.respuestas_correctas++;
     }
-    /*
-        Registrar los resultados de la partida
+        
+    /**
+     * Registrar los resultados de la partida.
      */
     public void finalizar() {
         duracion = DevolverDuracion(this.fecha, this.fin);
         PartidaDAO.save(this);
     }
     
+    /**
+     * Se comprueba si la respuesta de la pregunta es correcta.
+     * @param preg
+     * @param codigo
+     * @return 
+     */
     public Respuesta findRespuesta(Pregunta preg, int codigo){
         Respuesta resp = null;
         for(Respuesta r : preg.getRespuestas()){
