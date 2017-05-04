@@ -24,7 +24,7 @@ public class AreaDAO {
         ArrayList<Area> al = new ArrayList();
         Statement stat =BDConnect.connect().createStatement();
         try{
-            ResultSet rs = stat.executeQuery("SELECT * FROM conocevalencia.TEMATICA ORDER BY codigo_tematica");
+            ResultSet rs = stat.executeQuery("SELECT * FROM Tematica ORDER BY codigo_tematica");
             if (rs.next()){
             do {
                 int codigo=rs.getInt("codigo_tematica");

@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * @author Lliurex
  */
 public class BDConnect {
-    public static String conData = "jdbc:mysql://127.0.0.1:3306/conocevalencia?" +
+    public static String conData = "jdbc:mysql://127.0.0.1:3306/conocevalenciadb?" +
                                            "user=root&password=";
     
     public static Connection connect(){

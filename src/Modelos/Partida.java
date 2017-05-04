@@ -37,8 +37,8 @@ public class Partida {
     public PreguntaGrupo[] cargarPreguntas() throws SQLException {
         ArrayList<Pregunta> al = PreguntaDAO.loadAll();
         for (int i = 0; i < 10; i++) {
-            Pregunta p = al.get((int) Math.random() * al.size() + 1);
-            preguntas[i] = (PreguntaGrupo) p;
+            Pregunta p = al.get((int)Math.random()*al.size()+1);
+            preguntas[i]=(PreguntaGrupo)p;
             PreguntaDAO.incrementarVeces(p);
         }
 
