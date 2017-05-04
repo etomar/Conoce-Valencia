@@ -124,7 +124,7 @@ public class ConoceValencia {
                         do{
                             System.out.println("Seleccionar respuesta");
                             a = sc.next().toUpperCase().charAt(0);
-                        }while(a!='A' && a!='B' && a!='C' && a!='D');
+                        }while(a!='A' && a!='B' && a!='C' && a!='D'); 
                         
                         switch(a){
                             case 'A':
