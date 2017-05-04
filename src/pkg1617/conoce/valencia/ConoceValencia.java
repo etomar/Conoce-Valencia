@@ -10,7 +10,11 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-/*@autor iguisado*/
+
+/**
+ * Clase principal del programa Conoce Valencia.
+ * @author Ivan Guisado
+ */
 public class ConoceValencia {
 
     public static Scanner sc = new Scanner(System.in);
@@ -73,6 +77,10 @@ public class ConoceValencia {
         }
     }
 
+    /**
+     * Menu con las opciones del juego.
+     * @return 
+     */
     public static int menu() {
 
         int eleccion = 0;
@@ -92,6 +100,11 @@ public class ConoceValencia {
         return eleccion;
     }
 
+    /**
+     * Clase principal del programa.
+     * @param args
+     * @throws SQLException 
+     */
     public static void main(String[] args) throws SQLException {
 
         int eleccion;
