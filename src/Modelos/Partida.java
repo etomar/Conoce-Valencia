@@ -72,9 +72,9 @@ public class Partida {
 
     public String DevolverDuracion(Calendar fecha, Calendar fin) {
         fin = Calendar.getInstance();
-        int h = fecha.get(Calendar.HOUR_OF_DAY) - fin.get(Calendar.HOUR_OF_DAY);
-        int m = fecha.get(Calendar.MINUTE) - fin.get(Calendar.MINUTE);
-        int s = fecha.get(Calendar.SECOND) - fin.get(Calendar.SECOND);
+        int h =  fin.get(Calendar.HOUR_OF_DAY)-fecha.get(Calendar.HOUR_OF_DAY);
+        int m =  fin .get(Calendar.MINUTE)-fecha.get(Calendar.MINUTE);
+        int s = fin.get(Calendar.SECOND)-fecha.get(Calendar.SECOND);
         String hora = Integer.toString(h);
         String min = Integer.toString(m);
         String sec = Integer.toString(s);
